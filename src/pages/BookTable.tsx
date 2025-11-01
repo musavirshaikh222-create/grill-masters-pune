@@ -1,0 +1,158 @@
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Calendar } from "@/components/ui/calendar";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { CalendarIcon, Users, Clock } from "lucide-react";
+
+const BookTable = () => {
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const { toast } = useToast();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Booking Confirmed!",
+      description: "Your table has been reserved. We'll send you a confirmation email shortly.",
+    });
+  };
+
+  const timeSlots = [
+    "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM",
+    "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM",
+    "8:30 PM", "9:00 PM", "9:30 PM", "10:00 PM"
+  ];
+
+  return (
+    <div className="min-h-screen">
+      <Navigation />
+      <WhatsAppButton />
+      
+      <div className="pt-32 pb-20 px-4">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center mb-12">
+            <h1 className="text-5xl font-bold mb-4">
+              Book Your <span className="text-primary">Table</span>
+            </h1>
+            <p className="text-xl text-muted-foreground">
+              Reserve your spot for an unforgettable dining experience
+            </p>
+          </div>
+
+          <Card className="bg-card border-border">
+            <CardHeader>
+              <CardTitle>Reservation Details</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <Label htmlFor="name">Full Name *</Label>
+                    <Input id="name" required placeholder="Enter your name" />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="phone">Phone Number *</Label>
+                    <Input id="phone" type="tel" required placeholder="+91-XXXXXXXXXX" />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="email">Email</Label>
+                    <Input id="email" type="email" placeholder="your.email@example.com" />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="guests">Number of Guests *</Label>
+                    <Select required>
+                      <SelectTrigger id="guests">
+                        <SelectValue placeholder="Select guests" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1">1 Guest</SelectItem>
+                        <SelectItem value="2">2 Guests</SelectItem>
+                        <SelectItem value="3">3 Guests</SelectItem>
+                        <SelectItem value="4">4 Guests</SelectItem>
+                        <SelectItem value="5">5 Guests</SelectItem>
+                        <SelectItem value="6">6 Guests</SelectItem>
+                        <SelectItem value="7+">7+ Guests</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <Label className="mb-2 block">Select Date *</Label>
+                    <div className="border border-border rounded-lg p-4 bg-secondary/20">
+                      <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        disabled={(date) => date < new Date()}
+                        className="rounded-md"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="time">Select Time *</Label>
+                    <Select required>
+                      <SelectTrigger id="time">
+                        <SelectValue placeholder="Choose time slot" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {timeSlots.map((slot) => (
+                          <SelectItem key={slot} value={slot}>
+                            {slot}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+
+                    <div className="mt-6 space-y-4">
+                      <div className="flex items-center space-x-3 text-sm">
+                        <CalendarIcon className="w-5 h-5 text-primary" />
+                        <span className="text-muted-foreground">Pick your preferred date</span>
+                      </div>
+                      <div className="flex items-center space-x-3 text-sm">
+                        <Clock className="w-5 h-5 text-primary" />
+                        <span className="text-muted-foreground">Open 12 PM - 11 PM daily</span>
+                      </div>
+                      <div className="flex items-center space-x-3 text-sm">
+                        <Users className="w-5 h-5 text-primary" />
+                        <span className="text-muted-foreground">Perfect for all group sizes</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="notes">Special Requests (Optional)</Label>
+                  <Input id="notes" placeholder="Any special requirements or occasions?" />
+                </div>
+
+                <Button type="submit" size="lg" className="w-full">
+                  Confirm Reservation
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+
+          <div className="mt-8 text-center text-muted-foreground">
+            <p>Need help? Call us at <span className="text-primary font-semibold">+91-XXXXXXXXXX</span></p>
+          </div>
+        </div>
+      </div>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default BookTable;
