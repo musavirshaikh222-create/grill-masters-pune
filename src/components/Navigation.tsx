@@ -3,10 +3,13 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
+import { removeBackground, loadImage } from "@/utils/removeBackground";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [transparentLogo, setTransparentLogo] = useState<string>(logo);
+  const [isProcessing, setIsProcessing] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -15,6 +18,40 @@ const Navigation = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const processLogo = async () => {
+      if (isProcessing) return;
+      
+      try {
+        setIsProcessing(true);
+        console.log('Processing logo to remove background...');
+        
+        // Fetch the logo as a blob
+        const response = await fetch(logo);
+        const blob = await response.blob();
+        
+        // Load as image element
+        const img = await loadImage(blob);
+        
+        // Remove background
+        const transparentBlob = await removeBackground(img);
+        
+        // Create URL for the transparent image
+        const url = URL.createObjectURL(transparentBlob);
+        setTransparentLogo(url);
+        
+        console.log('Background removed successfully!');
+      } catch (error) {
+        console.error('Failed to remove background:', error);
+        // Keep using original logo if processing fails
+      } finally {
+        setIsProcessing(false);
+      }
+    };
+
+    processLogo();
   }, []);
 
   const navLinks = [
@@ -38,10 +75,9 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center space-x-2">
             <img 
-              src={logo} 
+              src={transparentLogo} 
               alt="Barbeque Experts Logo" 
               className="h-16 w-auto object-contain"
-              style={{ mixBlendMode: 'lighten' }}
             />
           </Link>
 
