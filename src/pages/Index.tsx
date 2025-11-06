@@ -78,9 +78,6 @@ const Index = () => {
             <Button asChild size="lg" className="text-lg px-8 hover-lift">
               <Link to="/book-table">Book a Table</Link>
             </Button>
-            <Button asChild size="lg" variant="secondary" className="text-lg px-8 hover-lift">
-              <Link to="/order">Order Online</Link>
-            </Button>
             <Button asChild size="lg" variant="outline" className="text-lg px-8 hover-lift">
               <Link to="/menu">Explore Menu</Link>
             </Button>
