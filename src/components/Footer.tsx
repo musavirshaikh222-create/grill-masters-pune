@@ -21,7 +21,7 @@ const Footer = () => {
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+              <a href="https://www.instagram.com/barbecue_experts_pune/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
@@ -32,7 +32,6 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li><Link to="/menu" className="text-muted-foreground hover:text-primary transition-colors text-sm">Menu</Link></li>
-              <li><Link to="/order" className="text-muted-foreground hover:text-primary transition-colors text-sm">Order Online</Link></li>
               <li><Link to="/book-table" className="text-muted-foreground hover:text-primary transition-colors text-sm">Book Table</Link></li>
               <li><Link to="/events" className="text-muted-foreground hover:text-primary transition-colors text-sm">Events & Offers</Link></li>
               <li><Link to="/gallery" className="text-muted-foreground hover:text-primary transition-colors text-sm">Gallery</Link></li>
