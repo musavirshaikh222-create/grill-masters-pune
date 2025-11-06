@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { CalendarIcon, Users, Clock } from "lucide-react";
 
-const WEBHOOK_TEST_URL = "https://buckss.app.n8n.cloud/webhook-test/c47cb5d5-172a-45fa-ba82-de50189fdf49";
+const WEBHOOK_TEST_URL = "https://buckss.app.n8n.cloud/webhook/c47cb5d5-172a-45fa-ba82-de50189fdf49";
 // When ready for production, replace with:
 // const WEBHOOK_PROD_URL = "https://buckss.app.n8n.cloud/webhook/5ffb6ddb-cd2d-4837-97f5-be732f4f2f05";
 
