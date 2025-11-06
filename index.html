@@ -25,41 +25,30 @@
 
   <body>
     <div id="root"></div>
-     <script type="module">
-    // Import Firebase SDKs
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
+   <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-    // Your Firebase configuration (already created by you)
-    const firebaseConfig = {
-      apiKey: "AIzaSyCv8xTnwbN1z3Da-G_vjWpMJ-n3RVGK7gU",
-      authDomain: "barbecue-experts.firebaseapp.com",
-      databaseURL: "https://barbecue-experts-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "barbecue-experts",
-      storageBucket: "barbecue-experts.firebasestorage.app",
-      messagingSenderId: "336912203303",
-      appId: "1:336912203303:web:f4fc6b623121b48d115802",
-      measurementId: "G-YCV0NPRDKY"
-    };
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCv8xTnwbN1z3Da-G_vjWpMJ-n3RVGK7gU",
+    authDomain: "barbecue-experts.firebaseapp.com",
+    databaseURL: "https://barbecue-experts-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "barbecue-experts",
+    storageBucket: "barbecue-experts.firebasestorage.app",
+    messagingSenderId: "336912203303",
+    appId: "1:336912203303:web:f4fc6b623121b48d115802",
+    measurementId: "G-YCV0NPRDKY"
+  };
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // Example Function — Save Table Reservation
-    window.saveReservation = function(name, phone, date, time, guests) {
-      const reservationRef = ref(db, 'reservations/' + Date.now());
-      set(reservationRef, {
-        name,
-        phone,
-        date,
-        time,
-        guests
-      })
-      .then(() => alert('✅ Reservation Saved Successfully!'))
-      .catch(error => alert('❌ Error: ' + error.message));
-    };
-  </script>
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
