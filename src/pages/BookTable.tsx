@@ -15,13 +15,55 @@ const BookTable = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast({
-      title: "Booking Confirmed!",
-      description: "Your table has been reserved. We'll send you a confirmation email shortly.",
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  // collect form data from your fields
+  const name = (document.getElementById("name") as HTMLInputElement)?.value;
+  const phone = (document.getElementById("phone") as HTMLInputElement)?.value;
+  const email = (document.getElementById("email") as HTMLInputElement)?.value;
+  const guests = (document.getElementById("guests") as HTMLSelectElement)?.value;
+  const time = (document.getElementById("time") as HTMLSelectElement)?.value;
+  const notes = (document.getElementById("notes") as HTMLInputElement)?.value;
+
+  // send data to your n8n webhook test URL
+  try {
+    const response = await fetch("https://buckss.app.n8n.cloud/webhook-test/5ffb6ddb-cd2d-4837-97f5-be732f4f2f05", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        phone,
+        email,
+        guests,
+        time,
+        date: date?.toISOString(),
+        notes,
+      }),
     });
-  };
+
+    if (response.ok) {
+      toast({
+        title: "Booking Confirmed!",
+        description: "Your table has been reserved. We'll send you a confirmation email shortly.",
+      });
+    } else {
+      toast({
+        title: "Something went wrong",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    }
+  } catch (error) {
+    toast({
+      title: "Network Error",
+      description: "Unable to send booking. Try again later.",
+      variant: "destructive",
+    });
+  }
+};
 
   const timeSlots = [
     "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM",
