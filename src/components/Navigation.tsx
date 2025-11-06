@@ -40,7 +40,7 @@ const Navigation = () => {
             <img 
               src={logo} 
               alt="Barbeque Experts Logo" 
-              className="h-16 w-auto object-contain"
+              className="h-20 w-auto object-contain"
             />
           </Link>
 
