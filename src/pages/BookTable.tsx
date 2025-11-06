@@ -11,65 +11,102 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { CalendarIcon, Users, Clock } from "lucide-react";
 
+const WEBHOOK_TEST_URL = "https://buckss.app.n8n.cloud/webhook-test/5ffb6ddb-cd2d-4837-97f5-be732f4f2f05";
+// When ready for production, replace with:
+// const WEBHOOK_PROD_URL = "https://buckss.app.n8n.cloud/webhook/5ffb6ddb-cd2d-4837-97f5-be732f4f2f05";
+
 const BookTable = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const { toast } = useToast();
-
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-
-  // collect form data from your fields
-  const name = (document.getElementById("name") as HTMLInputElement)?.value;
-  const phone = (document.getElementById("phone") as HTMLInputElement)?.value;
-  const email = (document.getElementById("email") as HTMLInputElement)?.value;
-  const guests = (document.getElementById("guests") as HTMLSelectElement)?.value;
-  const time = (document.getElementById("time") as HTMLSelectElement)?.value;
-  const notes = (document.getElementById("notes") as HTMLInputElement)?.value;
-
-  // send data to your n8n webhook test URL
-  try {
-    const response = await fetch("https://buckss.app.n8n.cloud/webhook-test/5ffb6ddb-cd2d-4837-97f5-be732f4f2f05", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        phone,
-        email,
-        guests,
-        time,
-        date: date?.toISOString(),
-        notes,
-      }),
-    });
-
-    if (response.ok) {
-      toast({
-        title: "Booking Confirmed!",
-        description: "Your table has been reserved. We'll send you a confirmation email shortly.",
-      });
-    } else {
-      toast({
-        title: "Something went wrong",
-        description: "Please try again later.",
-        variant: "destructive",
-      });
-    }
-  } catch (error) {
-    toast({
-      title: "Network Error",
-      description: "Unable to send booking. Try again later.",
-      variant: "destructive",
-    });
-  }
-};
 
   const timeSlots = [
     "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM",
     "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM",
     "8:30 PM", "9:00 PM", "9:30 PM", "10:00 PM"
   ];
+
+  // Controlled form state
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    guests: "",
+    time: "",
+    notes: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  // For Select components that provide onValueChange
+  const handleGuestsChange = (value: string) => setFormData(prev => ({ ...prev, guests: value }));
+  const handleTimeChange = (value: string) => setFormData(prev => ({ ...prev, time: value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Basic validation
+    if (!formData.name || !formData.phone || !formData.guests || !formData.time || !date) {
+      toast({
+        title: "Missing information",
+        description: "Please fill required fields: name, phone, guests, time and date.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Prepare payload
+    const payload = {
+      name: formData.name,
+      phone: formData.phone,
+      email: formData.email,
+      guests: formData.guests,
+      time: formData.time,
+      date: date?.toISOString(),
+      notes: formData.notes,
+      createdAt: new Date().toISOString(),
+    };
+
+    try {
+      const response = await fetch(WEBHOOK_TEST_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // Optional: add a simple secret header for n8n to verify
+          // "x-webhook-secret": "your-secret-token-here"
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Booking Confirmed!",
+          description: "Your table has been reserved. We'll send you a confirmation email shortly.",
+        });
+
+        // Optional: clear form
+        setFormData({ name: "", phone: "", email: "", guests: "", time: "", notes: "" });
+        setDate(new Date());
+      } else {
+        const text = await response.text();
+        console.error("Webhook error:", response.status, text);
+        toast({
+          title: "Error",
+          description: "Unable to submit booking. Try again later.",
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      console.error("Network error:", err);
+      toast({
+        title: "Network Error",
+        description: "Unable to reach the booking service. Try again later.",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -96,22 +133,22 @@ const handleSubmit = async (e: React.FormEvent) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <Label htmlFor="name">Full Name *</Label>
-                    <Input id="name" required placeholder="Enter your name" />
+                    <Input id="name" required placeholder="Enter your name" value={formData.name} onChange={handleChange} />
                   </div>
 
                   <div>
                     <Label htmlFor="phone">Phone Number *</Label>
-                    <Input id="phone" type="tel" required placeholder="+91-XXXXXXXXXX" />
+                    <Input id="phone" type="tel" required placeholder="+91-XXXXXXXXXX" value={formData.phone} onChange={handleChange} />
                   </div>
 
                   <div>
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="your.email@example.com" />
+                    <Input id="email" type="email" placeholder="your.email@example.com" value={formData.email} onChange={handleChange} />
                   </div>
 
                   <div>
                     <Label htmlFor="guests">Number of Guests *</Label>
-                    <Select required>
+                    <Select value={formData.guests} onValueChange={handleGuestsChange}>
                       <SelectTrigger id="guests">
                         <SelectValue placeholder="Select guests" />
                       </SelectTrigger>
@@ -136,7 +173,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                         mode="single"
                         selected={date}
                         onSelect={setDate}
-                        disabled={(date) => date < new Date()}
+                        disabled={(d) => d < new Date()}
                         className="rounded-md"
                       />
                     </div>
@@ -144,7 +181,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
                   <div>
                     <Label htmlFor="time">Select Time *</Label>
-                    <Select required>
+                    <Select value={formData.time} onValueChange={handleTimeChange}>
                       <SelectTrigger id="time">
                         <SelectValue placeholder="Choose time slot" />
                       </SelectTrigger>
@@ -176,7 +213,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
                 <div>
                   <Label htmlFor="notes">Special Requests (Optional)</Label>
-                  <Input id="notes" placeholder="Any special requirements or occasions?" />
+                  <Input id="notes" placeholder="Any special requirements or occasions?" value={formData.notes} onChange={handleChange} />
                 </div>
 
                 <Button type="submit" size="lg" className="w-full">
