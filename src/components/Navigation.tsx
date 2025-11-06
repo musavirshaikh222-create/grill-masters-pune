@@ -20,7 +20,6 @@ const Navigation = () => {
   const navLinks = [
     { to: "/", label: "Home" },
     { to: "/menu", label: "Menu" },
-    { to: "/order", label: "Order Online" },
     { to: "/book-table", label: "Book Table" },
     { to: "/events", label: "Events & Offers" },
     { to: "/gallery", label: "Gallery" },
