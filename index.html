@@ -48,6 +48,20 @@
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
+     import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
+
+const db = getDatabase();
+const testRef = ref(db, 'testBookings');
+const newTest = push(testRef);
+
+set(newTest, {
+  name: "TEST - Musavir",
+  phone: "9999999999",
+  date: new Date().toISOString(),
+  note: "Firebase connection test successful!"
+})
+  .then(() => console.log("✅ Test booking pushed to Firebase"))
+  .catch((err) => console.error("❌ Push error:", err));
 </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
