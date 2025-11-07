@@ -16,7 +16,7 @@ const Footer = () => {
               Experience unlimited barbeque buffet with live grill dining. Serving the finest Indian, Mughlai, and Chinese cuisine in Pune.
             </p>
             <div className="flex space-x-4">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+              <a href="https://www.facebook.com/p/Barbecue-Experts-Pune-61558040581332/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
               <a href="https://www.instagram.com/barbecue_experts_pune/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
