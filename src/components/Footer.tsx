@@ -22,6 +22,16 @@ const Footer = () => {
               <a href="https://www.instagram.com/barbecue_experts_pune/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
+              <a href="https://www.zomato.com/pune/barbecue-experts-lohegaon/order" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M14.51 12.38c0-.45-.14-.85-.42-1.2-.28-.35-.67-.53-1.17-.53-.5 0-.89.18-1.17.53-.28.35-.42.75-.42 1.2v5.18h3.18v-5.18zm7.49-9.88c0-.28-.1-.51-.29-.7-.19-.19-.42-.29-.7-.29h-17c-.28 0-.51.1-.7.29-.19.19-.29.42-.29.7v19c0 .28.1.51.29.7.19.19.42.29.7.29h17c.28 0 .51-.1.7-.29.19-.19.29-.42.29-.7v-19zm-13.32 15.06h-1.59v-7.65h-1.35v-1.47h1.35v-.88c0-.67.17-1.18.51-1.53.34-.35.82-.53 1.44-.53.28 0 .58.04.9.12v1.35c-.21-.06-.42-.09-.63-.09-.28 0-.48.08-.6.24-.12.16-.18.39-.18.69v.63h1.41v1.47h-1.41v7.65h.15zm6.17 0h-4.77v-9.12h4.5c.7 0 1.29.25 1.77.75.48.5.72 1.13.72 1.89 0 .45-.11.86-.33 1.23-.22.37-.52.65-.9.84.5.16.89.44 1.17.84.28.4.42.88.42 1.44 0 .82-.27 1.48-.81 1.98-.54.5-1.25.75-2.13.75h-.64v.3zm1.59-5.62v-2.03h-1.35v2.03h1.35z"/>
+                </svg>
+              </a>
+              <a href="https://www.swiggy.com/city/pune/barbecue-experts-porwal-rd-lohgaon-rest878962" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M13.93 13.93c.35-.35.35-.91 0-1.26l-2.4-2.4-2.4-2.4c-.35-.35-.91-.35-1.26 0-.35.35-.35.91 0 1.26l2.4 2.4-2.4 2.4c-.35.35-.35.91 0 1.26.35.35.91.35 1.26 0l2.4-2.4 2.4-2.4c.35-.35.35-.91 0-1.26zm5.66-10.19c-.19-.13-.42-.19-.64-.19h-14c-.22 0-.45.06-.64.19-.19.13-.32.32-.41.54l-2.81 7.03c-.13.32-.13.67 0 .99l2.81 7.03c.09.22.22.41.41.54.19.13.42.19.64.19h14c.22 0 .45-.06.64-.19.19-.13.32-.32.41-.54l2.81-7.03c.13-.32.13-.67 0-.99l-2.81-7.03c-.09-.22-.22-.41-.41-.54z"/>
+                </svg>
+              </a>
             </div>
           </div>
 
