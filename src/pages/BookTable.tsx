@@ -201,7 +201,7 @@ const BookTable = () => {
                       </div>
                       <div className="flex items-center space-x-3 text-sm">
                         <Clock className="w-5 h-5 text-primary" />
-                        <span className="text-muted-foreground">Open 12 PM - 11 PM daily</span>
+                        <span className="text-muted-foreground">Open 11 AM - 12:30 AM daily</span>
                       </div>
                       <div className="flex items-center space-x-3 text-sm">
                         <Users className="w-5 h-5 text-primary" />
