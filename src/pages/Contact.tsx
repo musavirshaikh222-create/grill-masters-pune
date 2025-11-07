@@ -12,13 +12,57 @@ import { useToast } from "@/hooks/use-toast";
 const Contact = () => {
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  const form = e.target as HTMLFormElement;
+  const name = (form.querySelector("#contact-name") as HTMLInputElement).value;
+  const email = (form.querySelector("#contact-email") as HTMLInputElement).value;
+  const phone = (form.querySelector("#contact-phone") as HTMLInputElement).value;
+  const subject = (form.querySelector("#subject") as HTMLInputElement).value;
+  const message = (form.querySelector("#message") as HTMLTextAreaElement).value;
+
+  // Your test webhook URL from n8n (POST endpoint)
+  const WEBHOOK_URL =
+    "https://buckss.app.n8n.cloud/webhook-test/2235781f-4371-4f6e-8767-41c352ed171f";
+
+  const payload = {
+    name,
+    email,
+    phone,
+    subject,
+    message,
+    source: "Contact Page",
+    sentAt: new Date().toISOString(),
+  };
+
+  try {
+    const response = await fetch(WEBHOOK_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) throw new Error("Webhook error");
+
     toast({
       title: "Message Sent!",
       description: "Thank you for contacting us. We'll get back to you soon.",
     });
-  };
+
+    // Optional: clear form
+    form.reset();
+  } catch (err) {
+    console.error("Error sending to webhook:", err);
+    toast({
+      title: "Error",
+      description: "Something went wrong. Please try again later.",
+      variant: "destructive",
+    });
+  }
+};
 
   const handleWhatsApp = () => {
     window.open("https://wa.me/91XXXXXXXXXX", "_blank");
