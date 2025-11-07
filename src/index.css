@@ -192,3 +192,22 @@ All colors MUST be HSL.
     box-shadow: 0 12px 24px -10px hsl(var(--primary) / 0.3);
   }
 }
+
+/* --- Hide Lovable editor badge (if injected) --- */
+@layer base {
+  #lovable-editor-badge,
+  .lovable-editor-badge,
+  .lovable-float-btn,
+  iframe[title*="Lovable"],
+  iframe[src*="lovable"],
+  script[src*="lovable"],
+  a[href*="lovable.app"],
+  a[href*="lovable.dev"] {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+  }
+}
