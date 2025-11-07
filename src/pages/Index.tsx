@@ -14,62 +14,76 @@ const Index = () => {
     {
       icon: Flame,
       title: "Live Grill Experience",
-      description: "Enjoy unlimited grilling at your table with premium quality ingredients"
+      description: "Enjoy unlimited grilling at your table with premium quality ingredients",
     },
     {
       icon: Users,
       title: "Family Friendly",
-      description: "Perfect ambience for families, friends, and corporate gatherings"
+      description: "Perfect ambience for families, friends, and corporate gatherings",
     },
     {
       icon: Star,
       title: "Premium Quality",
-      description: "Top-quality food with exceptional service and presentation"
+      description: "Top-quality food with exceptional service and presentation",
     },
     {
       icon: Clock,
       title: "Open Daily",
-      description: "Serving delicious buffet from 12 PM to 11 PM every day"
-    }
+      description: "Serving delicious buffet from 12 PM to 11 PM every day",
+    },
   ];
 
   const testimonials = [
     {
       name: "Rajesh Kumar",
       rating: 5,
-      text: "Best barbeque experience in Pune! The unlimited buffet is worth every penny."
+      text: "Best barbeque experience in Pune! The unlimited buffet is worth every penny.",
     },
     {
       name: "Priya Sharma",
       rating: 5,
-      text: "Amazing ambience and delicious food. Perfect place for family dinners!"
+      text: "Amazing ambience and delicious food. Perfect place for family dinners!",
     },
     {
       name: "Amit Patel",
       rating: 5,
-      text: "Live grill at the table is fantastic. Great variety in both veg and non-veg."
-    }
+      text: "Live grill at the table is fantastic. Great variety in both veg and non-veg.",
+    },
   ];
 
   return (
     <div className="min-h-screen">
       <Navigation />
       <WhatsAppButton />
-      
-      {/* Hero Section */}
+
+      {/* Hero Section - Background Video */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroBbq})` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background"></div>
+        {/* 🔥 Background video replaces static image */}
+        <div className="absolute inset-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster={heroBbq} // fallback image while video loads
+            className="w-full h-full object-cover"
+          >
+            <source src="/assets/barbeque-animated.mp4" type="video/mp4" />
+            {/* Optional: add webm fallback */}
+            {/* <source src="/assets/barbeque-animated.webm" type="video/webm" /> */}
+          </video>
         </div>
-        
+
+        {/* Overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background"></div>
+
+        {/* Hero Content */}
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">
             Unlimited Flavours.
             <br />
-            <span className="text-primary animate-glow">Unforgettable</span> <span className="text-accent animate-glow">Moments.</span>
+            <span className="text-primary animate-glow">Unforgettable</span>{" "}
+            <span className="text-accent animate-glow">Moments.</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 animate-fade-in stagger-1">
             Experience the finest unlimited barbeque buffet in Pune
@@ -96,8 +110,8 @@ const Index = () => {
               Welcome to <span className="text-primary">Barbeque Experts</span>
             </h2>
             <p className="text-lg text-muted-foreground animate-fade-in stagger-1">
-              At Barbeque Experts, we bring you an unparalleled dining experience with unlimited barbeque buffet, 
-              live grill at your table, and a perfect blend of Indian, Mughlai, and Chinese cuisines. 
+              At Barbeque Experts, we bring you an unparalleled dining experience with unlimited barbeque buffet,
+              live grill at your table, and a perfect blend of Indian, Mughlai, and Chinese cuisines.
               Located at Dhanori Jakatnaka, Lohegaon, we serve food lovers across Pune with passion and excellence.
             </p>
           </div>
@@ -105,8 +119,8 @@ const Index = () => {
           {/* Features Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {features.map((feature, index) => (
-              <Card 
-                key={index} 
+              <Card
+                key={index}
                 className={`bg-card border-border hover:border-primary transition-all duration-300 hover-lift animate-scale-in stagger-${index + 1}`}
               >
                 <CardContent className="p-6 text-center">
@@ -128,9 +142,9 @@ const Index = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="relative h-[400px] rounded-lg overflow-hidden group animate-slide-in-left">
-              <img 
-                src={buffetSpread} 
-                alt="Buffet Spread" 
+              <img
+                src={buffetSpread}
+                alt="Buffet Spread"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent flex items-end">
@@ -141,9 +155,9 @@ const Index = () => {
               </div>
             </div>
             <div className="relative h-[400px] rounded-lg overflow-hidden group animate-slide-in-right">
-              <img 
-                src={restaurantInterior} 
-                alt="Restaurant Interior" 
+              <img
+                src={restaurantInterior}
+                alt="Restaurant Interior"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent flex items-end">
@@ -165,8 +179,8 @@ const Index = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((testimonial, index) => (
-              <Card 
-                key={index} 
+              <Card
+                key={index}
                 className={`bg-card border-border hover-lift animate-fade-in stagger-${index + 1}`}
               >
                 <CardContent className="p-6">
