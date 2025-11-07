@@ -65,7 +65,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 };
 
   const handleWhatsApp = () => {
-    window.open("https://wa.me/91XXXXXXXXXX", "_blank");
+    window.open("https://wa.me/918805022822", "_blank");
   };
 
   const contactInfo = [
@@ -77,7 +77,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     {
       icon: Phone,
       title: "Phone",
-      content: "+91-XXXXXXXXXX"
+      content: "+91 8805022822"
     },
     {
       icon: Mail,
@@ -87,7 +87,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     {
       icon: Clock,
       title: "Opening Hours",
-      content: "12:00 PM - 11:00 PM (Daily)"
+      content: "11:00 AM - 12:30 AM (Daily)"
     }
   ];
 
