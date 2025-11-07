@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
-import swiggyLogo from "@/assets/swiggy-logo.png";
-import zomato from "@/assets/zomato-logo.png";
 
 const Footer = () => {
   return (
@@ -24,11 +22,11 @@ const Footer = () => {
               <a href="https://www.instagram.com/barbecue_experts_pune/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="https://www.zomato.com/pune/barbecue-experts-lohegaon/order" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-                <img src={zomato} alt="Zomato" className="w-5 h-5 object-contain" />
+              <a href="https://www.zomato.com/pune/barbecue-experts-lohegaon/order" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors text-sm font-semibold">
+                Zomato
               </a>
-              <a href="https://www.swiggy.com/city/pune/barbecue-experts-porwal-rd-lohgaon-rest878962" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-                <img src={swiggyLogo} alt="Swiggy" className="w-5 h-5 object-contain" />
+              <a href="https://www.swiggy.com/city/pune/barbecue-experts-porwal-rd-lohgaon-rest878962" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors text-sm font-semibold">
+                Swiggy
               </a>
             </div>
           </div>
