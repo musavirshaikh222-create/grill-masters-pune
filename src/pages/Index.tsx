@@ -56,27 +56,16 @@ const Index = () => {
       <Navigation />
       <WhatsAppButton />
       
-      {/* Hero Section (replaced with animated flame overlay) */}
+      {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background image */}
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroBbq})` }}
-          aria-hidden
-        />
-
-        {/* Flame overlays (subtle upward movement only) */}
-        <div className="absolute inset-0 z-10 pointer-events-none hero-flame-wrapper" aria-hidden>
-          <div className="flame-layer flame-layer-1" />
-          <div className="flame-layer flame-layer-2" />
-          <div className="flame-layer flame-layer-3" />
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background"></div>
         </div>
-
-        {/* Dark gradient overlay to preserve text contrast (unchanged look) */}
-        <div className="absolute inset-0 z-20 bg-gradient-to-b from-background/80 via-background/50 to-background" />
-
-        {/* Content (kept exactly as before) */}
-        <div className="relative z-30 text-center px-4 max-w-4xl mx-auto">
+        
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">
             Unlimited Flavours.
             <br />
@@ -97,79 +86,6 @@ const Index = () => {
             </Button>
           </div>
         </div>
-
-        {/* Inline CSS for flame animation - self-contained so only this file needs editing */}
-        <style>{`
-          /* Keyframes: subtle upward-only motion */
-          @keyframes flame-rise-1 {
-            0% { transform: translateY(0) scaleY(1); opacity: 0.15; }
-            50% { transform: translateY(-80px) scaleY(1.3); opacity: 0.08; }
-            100% { transform: translateY(-160px) scaleY(1.5); opacity: 0; }
-          }
-          @keyframes flame-rise-2 {
-            0% { transform: translateY(0) scaleY(1) translateX(0); opacity: 0.12; }
-            50% { transform: translateY(-70px) scaleY(1.2) translateX(-10px); opacity: 0.06; }
-            100% { transform: translateY(-140px) scaleY(1.4) translateX(-15px); opacity: 0; }
-          }
-          @keyframes flame-rise-3 {
-            0% { transform: translateY(0) scaleY(1) translateX(0); opacity: 0.10; }
-            50% { transform: translateY(-60px) scaleY(1.15) translateX(10px); opacity: 0.05; }
-            100% { transform: translateY(-120px) scaleY(1.3) translateX(20px); opacity: 0; }
-          }
-
-          /* Base flame layer styles */
-          .hero-flame-wrapper { position: absolute; inset: 0; z-index: 10; pointer-events: none; }
-          .flame-layer {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 60%;
-            pointer-events: none;
-            mix-blend-mode: screen;
-            filter: blur(28px) saturate(1.15);
-            background-repeat: no-repeat;
-            background-position: center bottom;
-            background-size: 140% 140%;
-            transform-origin: center bottom;
-            will-change: transform, opacity;
-          }
-
-          /* Visual fills using your HSL design tokens (keeps existing theme) */
-          .flame-layer.flame-layer-1 {
-            background-image: radial-gradient(ellipse at 50% 95%,
-              hsl(var(--fire-yellow) / 0.85) 0%,
-              hsl(var(--fire-orange) / 0.55) 35%,
-              transparent 65%);
-            animation: flame-rise-1 3s ease-out infinite;
-            opacity: 0.6;
-            filter: blur(26px) saturate(1.15);
-          }
-          .flame-layer.flame-layer-2 {
-            background-image: radial-gradient(ellipse at 50% 92%,
-              hsl(var(--fire-orange) / 0.75) 0%,
-              hsl(var(--fire-red) / 0.45) 40%,
-              transparent 70%);
-            animation: flame-rise-2 3.5s ease-out infinite 0.45s;
-            opacity: 0.45;
-            filter: blur(44px) saturate(1.2);
-          }
-          .flame-layer.flame-layer-3 {
-            background-image: radial-gradient(ellipse at 50% 88%,
-              hsl(var(--fire-red) / 0.7) 0%,
-              hsl(var(--fire-orange) / 0.35) 40%,
-              transparent 75%);
-            animation: flame-rise-3 4s ease-out infinite 0.9s;
-            opacity: 0.34;
-            filter: blur(60px) saturate(1.05);
-          }
-
-          /* Mobile: disable the animated overlays for battery/CPU saving and clarity */
-          @media (max-width: 640px) {
-            .hero-flame-wrapper { display: none; animation: none; }
-            .flame-layer { display: none; animation: none; }
-          }
-        `}</style>
       </section>
 
       {/* About Section */}
