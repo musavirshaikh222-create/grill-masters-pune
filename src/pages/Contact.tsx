@@ -25,7 +25,7 @@ const Contact = () => {
 
     // Your live n8n webhook URL (direct call)
     const WEBHOOK_URL =
-      "https://buckss.app.n8n.cloud/webhook-test/2235781f-4371-4f6e-8767-41c352ed171f";
+      "https://buckss.app.n8n.cloud/webhook/2235781f-4371-4f6e-8767-41c352ed171f";
 
     // Basic validation
     if (!name || !email || !message) {
