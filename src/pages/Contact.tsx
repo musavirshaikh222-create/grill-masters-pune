@@ -22,7 +22,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   const subject = (form.querySelector("#subject") as HTMLInputElement).value;
   const message = (form.querySelector("#message") as HTMLTextAreaElement).value;
 
-  // Your test webhook URL from n8n (POST endpoint)
+  // <-- Replace with your webhook URL (already set below)
   const WEBHOOK_URL =
     "https://buckss.app.n8n.cloud/webhook-test/2235781f-4371-4f6e-8767-41c352ed171f";
 
@@ -45,24 +45,51 @@ const handleSubmit = async (e: React.FormEvent) => {
       body: JSON.stringify(payload),
     });
 
-    if (!response.ok) throw new Error("Webhook error");
+    // read response body (try json then text)
+    let responseBody: any = null;
+    const ct = response.headers.get("content-type") || "";
+    try {
+      if (ct.includes("application/json")) {
+        responseBody = await response.json();
+      } else {
+        responseBody = await response.text();
+      }
+    } catch (err) {
+      responseBody = "(unable to parse response body)";
+    }
+
+    console.log("Webhook response status:", response.status, response.statusText);
+    console.log("Webhook response body:", responseBody);
+
+    if (!response.ok) {
+      // Show helpful toast with status and (short) body preview
+      toast({
+        title: `Error ${response.status}: ${response.statusText}`,
+        description:
+          typeof responseBody === "string"
+            ? responseBody.slice(0, 240)
+            : JSON.stringify(responseBody).slice(0, 240),
+        variant: "destructive",
+      });
+      return;
+    }
 
     toast({
       title: "Message Sent!",
       description: "Thank you for contacting us. We'll get back to you soon.",
     });
 
-    // Optional: clear form
     form.reset();
-  } catch (err) {
-    console.error("Error sending to webhook:", err);
+  } catch (err: any) {
+    console.error("Network or CORS error when sending to webhook:", err);
     toast({
-      title: "Error",
-      description: "Something went wrong. Please try again later.",
+      title: "Network error",
+      description: String(err.message || err),
       variant: "destructive",
     });
   }
 };
+
 
   const handleWhatsApp = () => {
     window.open("https://wa.me/918805022822", "_blank");
