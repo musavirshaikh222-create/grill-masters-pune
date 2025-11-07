@@ -23,52 +23,41 @@ const handleSubmit = async (e: React.FormEvent) => {
   const message = (form.querySelector("#message") as HTMLTextAreaElement).value;
 
   // <-- Replace with your webhook URL (already set below)
-  const WEBHOOK_URL =
-    "https://buckss.app.n8n.cloud/webhook-test/2235781f-4371-4f6e-8767-41c352ed171f";
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-  const payload = {
-    name,
-    email,
-    phone,
-    subject,
-    message,
-    source: "Contact Page",
-    sentAt: new Date().toISOString(),
-  };
+  const form = e.target as HTMLFormElement;
+  const name = (form.querySelector("#contact-name") as HTMLInputElement).value.trim();
+  const email = (form.querySelector("#contact-email") as HTMLInputElement).value.trim();
+  const phone = (form.querySelector("#contact-phone") as HTMLInputElement).value.trim();
+  const subject = (form.querySelector("#subject") as HTMLInputElement).value.trim();
+  const message = (form.querySelector("#message") as HTMLTextAreaElement).value.trim();
+
+  if (!name || !email || !message) {
+    toast({
+      title: "Validation error",
+      description: "Please fill the required fields: name, email and message.",
+      variant: "destructive",
+    });
+    return;
+  }
 
   try {
-    const response = await fetch(WEBHOOK_URL, {
+    const resp = await fetch("/api/contact", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, phone, subject, message }),
     });
 
-    // read response body (try json then text)
-    let responseBody: any = null;
-    const ct = response.headers.get("content-type") || "";
-    try {
-      if (ct.includes("application/json")) {
-        responseBody = await response.json();
-      } else {
-        responseBody = await response.text();
-      }
-    } catch (err) {
-      responseBody = "(unable to parse response body)";
-    }
+    const text = await resp.text().catch(() => "");
+    let body: any = {};
+    try { body = text ? JSON.parse(text) : {}; } catch { body = { raw: text }; }
 
-    console.log("Webhook response status:", response.status, response.statusText);
-    console.log("Webhook response body:", responseBody);
-
-    if (!response.ok) {
-      // Show helpful toast with status and (short) body preview
+    if (!resp.ok) {
+      console.error("Server forward error:", resp.status, body);
       toast({
-        title: `Error ${response.status}: ${response.statusText}`,
-        description:
-          typeof responseBody === "string"
-            ? responseBody.slice(0, 240)
-            : JSON.stringify(responseBody).slice(0, 240),
+        title: `Error ${resp.status}`,
+        description: body?.message || "Failed to send message. Try again later.",
         variant: "destructive",
       });
       return;
@@ -76,12 +65,11 @@ const handleSubmit = async (e: React.FormEvent) => {
 
     toast({
       title: "Message Sent!",
-      description: "Thank you for contacting us. We'll get back to you soon.",
+      description: "Thank you — we received your message and will contact you soon.",
     });
-
     form.reset();
   } catch (err: any) {
-    console.error("Network or CORS error when sending to webhook:", err);
+    console.error("Network error to server:", err);
     toast({
       title: "Network error",
       description: String(err.message || err),
@@ -89,6 +77,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     });
   }
 };
+
 
 
   const handleWhatsApp = () => {
