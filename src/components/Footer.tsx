@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   return (
     <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* About Section */}
           <div>
             <h3 className="text-xl font-bold mb-4">
@@ -56,20 +54,8 @@ const Footer = () => {
               </li>
             </ul>
             <p className="text-sm text-muted-foreground mt-4">
-              <strong>Hours:</strong> 12 PM – 11 PM Daily
+              <strong>Hours:</strong> 11 AM – 12:30 AM Daily
             </p>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Newsletter</h4>
-            <p className="text-muted-foreground text-sm mb-4">
-              Subscribe for exclusive offers and updates!
-            </p>
-            <div className="flex flex-col space-y-2">
-              <Input type="email" placeholder="Your email" className="bg-secondary" />
-              <Button variant="default" size="sm">Subscribe</Button>
-            </div>
           </div>
         </div>
 
