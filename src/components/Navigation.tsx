@@ -4,6 +4,8 @@ import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 
+const PHONE_NUMBER = "+918805022822";
+
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -27,6 +29,58 @@ const Navigation = () => {
     { to: "/contact", label: "Contact" },
   ];
 
+  const handleCallNow = async (
+    e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>
+  ) => {
+    // Prevent default navigation so our logic runs first
+    e.preventDefault();
+
+    const telUrl = `tel:${PHONE_NUMBER}`;
+
+    // basic mobile detection
+    const isMobile =
+      /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
+        navigator.userAgent || ""
+      );
+
+    try {
+      if (isMobile) {
+        // On mobile, navigate to tel: to open dialer
+        window.location.href = telUrl;
+        return;
+      }
+
+      // On desktop, try window.open first (some desktop setups may handle tel:)
+      const newWindow = window.open(telUrl);
+      if (newWindow) {
+        // opened successfully (or the browser attempted to); done
+        return;
+      }
+
+      // Fallback: copy to clipboard and inform the user
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(PHONE_NUMBER);
+        // Small visible fallback — replace with your toast if you have one
+        alert(`Phone number copied to clipboard: ${PHONE_NUMBER}`);
+      } else {
+        // Very old browsers fallback
+        alert(`Call: ${PHONE_NUMBER}`);
+      }
+    } catch (err) {
+      // any error -> try clipboard then alert
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(PHONE_NUMBER);
+          alert(`Phone number copied to clipboard: ${PHONE_NUMBER}`);
+        } else {
+          alert(`Call: ${PHONE_NUMBER}`);
+        }
+      } catch {
+        alert(`Call: ${PHONE_NUMBER}`);
+      }
+    }
+  };
+
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -36,9 +90,9 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center space-x-2">
-            <img 
-              src={logo} 
-              alt="Barbeque Experts Logo" 
+            <img
+              src={logo}
+              alt="Barbeque Experts Logo"
               className="h-20 w-auto object-contain"
             />
           </Link>
@@ -56,16 +110,21 @@ const Navigation = () => {
                 {link.label}
               </Link>
             ))}
-            <Button variant="default" size="sm" className="ml-4">
-              <Phone className="w-4 h-4 mr-2" />
-              Call Now
-            </Button>
+
+            {/* Call Now - desktop */}
+            <a href={`tel:${PHONE_NUMBER}`} onClick={handleCallNow}>
+              <Button variant="default" size="sm" className="ml-4">
+                <Phone className="w-4 h-4 mr-2" />
+                Call Now
+              </Button>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             className="lg:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
               <X className="w-6 h-6 text-foreground" />
@@ -90,10 +149,14 @@ const Navigation = () => {
                 {link.label}
               </Link>
             ))}
-            <Button variant="default" size="sm" className="mt-4 w-full">
-              <Phone className="w-4 h-4 mr-2" />
-              Call Now
-            </Button>
+
+            {/* Call Now - mobile menu */}
+            <a href={`tel:${PHONE_NUMBER}`} onClick={handleCallNow}>
+              <Button variant="default" size="sm" className="mt-4 w-full">
+                <Phone className="w-4 h-4 mr-2" />
+                Call Now
+              </Button>
+            </a>
           </div>
         )}
       </div>
