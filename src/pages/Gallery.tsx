@@ -1,7 +1,7 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import heroBbq from "@/assets/hero-bbq.jpg";
+import heroVideo from "../assets/hero-bbq.mp4";
 import buffetSpread from "@/assets/buffet-spread.jpg";
 import restaurantInterior from "@/assets/restaurant-interior.jpg";
 
