@@ -24,7 +24,6 @@ const Navigation = () => {
     { to: "/menu", label: "Menu" },
     { to: "/book-table", label: "Book Table" },
     { to: "/events", label: "Events & Offers" },
-    { to: "/gallery", label: "Gallery" },
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
   ];
